@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ATS Buddy UAE — Design System
+   All colors MUST be HSL values only.
+*/
+
+@layer base {
+  :root {
+    /* Core surfaces */
+    --background: 220 20% 97%;
+    --foreground: 220 35% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 35% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 35% 12%;
+
+    /* Brand: Deep UAE navy */
+    --primary: 220 62% 22%;
+    --primary-foreground: 43 100% 96%;
+
+    /* Secondary surfaces */
+    --secondary: 220 18% 92%;
+    --secondary-foreground: 220 35% 18%;
+
+    /* Muted */
+    --muted: 220 15% 90%;
+    --muted-foreground: 220 15% 48%;
+
+    /* Gold accent */
+    --accent: 43 88% 52%;
+    --accent-foreground: 220 62% 10%;
+
+    /* Destructive */
+    --destructive: 0 74% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Form / borders */
+    --border: 220 18% 86%;
+    --input: 220 18% 86%;
+    --ring: 220 62% 22%;
+
+    --radius: 0.625rem;
+
+    /* Extended brand tokens */
+    --navy-deep: 220 62% 14%;
+    --navy-mid: 220 62% 22%;
+    --navy-light: 220 42% 36%;
+    --gold: 43 88% 52%;
+    --gold-light: 43 100% 68%;
+    --gold-muted: 43 60% 92%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 62% 14%), hsl(220 55% 28%));
+    --gradient-card: linear-gradient(160deg, hsl(0 0% 100%), hsl(220 18% 97%));
+    --gradient-gold: linear-gradient(135deg, hsl(43 88% 52%), hsl(38 90% 60%));
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px hsl(220 35% 12% / 0.06), 0 1px 2px hsl(220 35% 12% / 0.04);
+    --shadow-md: 0 4px 16px hsl(220 35% 12% / 0.08), 0 2px 6px hsl(220 35% 12% / 0.04);
+    --shadow-lg: 0 10px 40px hsl(220 35% 12% / 0.12), 0 4px 12px hsl(220 35% 12% / 0.06);
+    --shadow-card: 0 2px 12px hsl(220 62% 22% / 0.08);
+    --shadow-gold: 0 4px 20px hsl(43 88% 52% / 0.25);
+
+    /* Sidebar (unused but required) */
+    --sidebar-background: 220 62% 14%;
+    --sidebar-foreground: 43 100% 96%;
+    --sidebar-primary: 43 88% 52%;
+    --sidebar-primary-foreground: 220 62% 10%;
+    --sidebar-accent: 220 55% 22%;
+    --sidebar-accent-foreground: 43 100% 96%;
+    --sidebar-border: 220 45% 20%;
+    --sidebar-ring: 43 88% 52%;
+  }
+
+  .dark {
+    --background: 220 40% 8%;
+    --foreground: 220 15% 92%;
+    --card: 220 38% 11%;
+    --card-foreground: 220 15% 92%;
+    --popover: 220 38% 11%;
+    --popover-foreground: 220 15% 92%;
+    --primary: 43 88% 52%;
+    --primary-foreground: 220 62% 10%;
+    --secondary: 220 30% 16%;
+    --secondary-foreground: 220 15% 85%;
+    --muted: 220 25% 16%;
+    --muted-foreground: 220 15% 58%;
+    --accent: 43 88% 52%;
+    --accent-foreground: 220 62% 10%;
+    --destructive: 0 74% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 30% 18%;
+    --input: 220 30% 18%;
+    --ring: 43 88% 52%;
+
+    /* Dark mode extended tokens */
+    --navy-deep: 220 45% 10%;
+    --navy-mid: 220 45% 16%;
+    --navy-light: 220 35% 30%;
+    --gold: 43 88% 52%;
+    --gold-light: 43 100% 68%;
+    --gold-muted: 43 40% 18%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(220 45% 10%), hsl(220 40% 18%));
+    --gradient-card: linear-gradient(160deg, hsl(220 38% 11%), hsl(220 30% 14%));
+    --gradient-gold: linear-gradient(135deg, hsl(43 88% 52%), hsl(38 90% 60%));
+
+    --shadow-sm: 0 1px 3px hsl(220 40% 4% / 0.3), 0 1px 2px hsl(220 40% 4% / 0.2);
+    --shadow-md: 0 4px 16px hsl(220 40% 4% / 0.4), 0 2px 6px hsl(220 40% 4% / 0.2);
+    --shadow-lg: 0 10px 40px hsl(220 40% 4% / 0.5), 0 4px 12px hsl(220 40% 4% / 0.3);
+    --shadow-card: 0 2px 12px hsl(220 62% 4% / 0.4);
+    --shadow-gold: 0 4px 20px hsl(43 88% 52% / 0.35);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  /* Brand gradient backgrounds */
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+
+  /* Shadows */
+  .shadow-brand-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-brand-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-brand-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-brand-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Text gradients */
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted));
+    border-radius: 3px;
+  }
+}
+
+/* Smooth transitions */
+@layer base {
+  button, a, input, textarea, select {
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+}
