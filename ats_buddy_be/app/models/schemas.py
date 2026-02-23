@@ -69,6 +69,10 @@ class LoginRequest(BaseModel):
     password: str = Field(..., min_length=8, max_length=128)
 
 
+class GoogleAuthRequest(BaseModel):
+    id_token: str = Field(..., min_length=20)
+
+
 class AuthResponse(BaseModel):
     user_id: int
     full_name: str
@@ -81,3 +85,4 @@ class RegisteredUser(BaseModel):
     user_id: int
     full_name: str
     email: str
+    profile_image_url: Optional[str] = None

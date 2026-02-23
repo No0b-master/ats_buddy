@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS auth_tokens (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    access_token VARCHAR(255) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB;

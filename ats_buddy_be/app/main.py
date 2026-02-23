@@ -2,9 +2,12 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 from app.routes.auth_routes import router as auth_router
 from app.routes.ats_routes import router as ats_router
+
+load_dotenv()
 
 app = FastAPI(
     title="ATS Buddy UAE API",

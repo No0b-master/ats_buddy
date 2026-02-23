@@ -1,4 +1,4 @@
-from app.models.schemas import LoginRequest, RegisterRequest
+from app.models.schemas import GoogleAuthRequest, LoginRequest, RegisterRequest, RegisteredUser
 from app.services.auth_service import AuthService
 from app.views.response_view import success_response
 
@@ -14,3 +14,11 @@ class AuthController:
     def login(self, payload: LoginRequest):
         auth = self.service.login(payload)
         return success_response(auth.model_dump())
+
+    def google_auth(self, payload: GoogleAuthRequest):
+        auth = self.service.google_auth(payload)
+        return success_response(auth.model_dump())
+
+    @staticmethod
+    def me(current_user: RegisteredUser):
+        return success_response(current_user.model_dump())
