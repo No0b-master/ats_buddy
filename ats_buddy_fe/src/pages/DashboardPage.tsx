@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { ATSCheck } from '@/components/tools/ATSCheck';
@@ -9,6 +9,7 @@ import { LogOut, FileSearch2, Wand2, BarChart3, ChevronDown } from 'lucide-react
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { UAEFlagStrip } from '@/components/UAEFlag';
+import { api, type RegisteredUser } from '@/lib/api';
 
 // ─── Tool definitions ─────────────────────────────────────────────────────────
 
@@ -100,6 +101,28 @@ export default function DashboardPage() {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [activeTool, setActiveTool] = useState<ToolId>('ats');
+  const [profile, setProfile] = useState<RegisteredUser | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    const loadProfile = async () => {
+      try {
+        const res = await api.auth.me();
+        if (mounted && res.success) {
+          setProfile(res.data);
+        }
+      } catch {
+        if (mounted) {
+          setProfile(null);
+        }
+      }
+    };
+
+    loadProfile();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -116,19 +139,42 @@ export default function DashboardPage() {
       <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-sm shadow-brand-sm">
         {/* UAE flag strip */}
         <UAEFlagStrip className="rounded-none h-1.5" />
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-5 py-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-hero shadow-brand-sm">
-              <span className="text-sm font-bold text-primary-foreground">A</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-sm font-bold text-foreground leading-none">ATS Buddy</span>
-              <span className="inline-flex items-center gap-0.5 rounded-full bg-gold-muted px-2 py-0.5 text-[10px] font-semibold text-accent-foreground uppercase tracking-wide">
-                🇦🇪 UAE
-              </span>
+            <img src="/taleef_logo.png" alt="Taleef Technologies logo" className="h-9 w-9 rounded-lg object-contain" />
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-bold text-foreground leading-none">ATS Buddy</span>
+                <span className="inline-flex items-center gap-0.5 rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-semibold text-foreground uppercase tracking-wide">
+                  🇦🇪 UAE
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground">by Taleef Technologies</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1.5 max-w-[210px] sm:max-w-[320px]">
+              {profile?.profile_image_url ? (
+                <img
+                  src={profile.profile_image_url}
+                  alt="Google profile"
+                  className="h-7 w-7 rounded-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
+                  {profile?.full_name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+              )}
+              <div className="min-w-0">
+                <p className="truncate text-xs font-medium text-foreground">
+                  {profile?.full_name || 'Signed in user'}
+                </p>
+                <p className="truncate text-[11px] text-muted-foreground">
+                  {profile?.email || 'Signed in'}
+                </p>
+              </div>
+            </div>
             <ThemeToggle />
             <Button
               variant="outline"
@@ -144,7 +190,7 @@ export default function DashboardPage() {
       </header>
 
       {/* ── Main ── */}
-      <main className="mx-auto max-w-5xl px-4 py-8 space-y-8">
+      <main className="mx-auto max-w-7xl px-3 sm:px-5 py-8 space-y-8">
         {/* Welcome */}
         <div className="animate-fade-up">
           <h1 className="text-2xl font-bold text-foreground">Your Resume Tools</h1>
@@ -187,7 +233,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Panel content */}
-          <div className="p-6">
+          <div className="px-4 py-5">
             {activeTool === 'ats' && <ATSCheck />}
             {activeTool === 'optimizer' && <ResumeOptimizer />}
             {activeTool === 'keyword-gap' && <KeywordGap />}

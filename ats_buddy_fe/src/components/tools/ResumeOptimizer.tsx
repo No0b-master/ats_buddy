@@ -146,8 +146,20 @@ export function ResumeOptimizer() {
   };
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="grid gap-6 lg:grid-cols-2 items-start">
+      <div className="space-y-4 lg:sticky lg:top-24 animate-fade-up">
+        {result ? (
+          <OptimizeResults result={result} />
+        ) : (
+          <ResultBlock label="Optimization Results">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Run Resume Optimizer to view rewritten bullets, optimized summary, skills to add, and UAE localization tips here.
+            </p>
+          </ResultBlock>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4 animate-slide-in-right">
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="opt-role">Target Role (optional)</Label>
@@ -228,8 +240,6 @@ export function ResumeOptimizer() {
           )}
         </Button>
       </form>
-
-      {result && <OptimizeResults result={result} />}
     </div>
   );
 }

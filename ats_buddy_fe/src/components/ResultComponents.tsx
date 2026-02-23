@@ -63,7 +63,12 @@ interface ResultBlockProps {
 
 export function ResultBlock({ label, children, copyText, className }: ResultBlockProps) {
   return (
-    <div className={cn('rounded-lg border border-border bg-card shadow-brand-sm overflow-hidden', className)}>
+    <div
+      className={cn(
+        'rounded-lg border border-border bg-card shadow-brand-sm overflow-hidden animate-fade-in transition-all duration-200 hover:shadow-brand-md',
+        className
+      )}
+    >
       {(label || copyText) && (
         <div className="flex items-center justify-between border-b border-border px-4 py-2 bg-secondary/40">
           {label && (
