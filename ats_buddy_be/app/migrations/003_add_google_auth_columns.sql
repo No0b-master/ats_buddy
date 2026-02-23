@@ -1,0 +1,3 @@
+ALTER TABLE users
+    ADD COLUMN google_sub VARCHAR(255) NULL UNIQUE,
+    ADD COLUMN auth_provider VARCHAR(32) NOT NULL DEFAULT 'local';

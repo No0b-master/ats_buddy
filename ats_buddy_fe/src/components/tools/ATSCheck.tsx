@@ -37,6 +37,15 @@ function ScoreCircle({ score }: { score: number }) {
   );
 }
 
+function formatScoreLabel(label: string): string {
+  return label
+    .replace(/_/g, ' ')
+    .split(' ')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 // ─── Results view ──────────────────────────────────────────────────────────────
 
 function ATSResults({ result }: { result: ATSCheckResult }) {
@@ -67,7 +76,7 @@ function ATSResults({ result }: { result: ATSCheckResult }) {
           {Object.keys(breakdown).length > 0 && (
             <div className="flex-1 w-full space-y-3">
               {Object.entries(breakdown).map(([key, val]) => (
-                <ScoreBar key={key} label={key} value={val} />
+                <ScoreBar key={key} label={formatScoreLabel(key)} value={val} />
               ))}
             </div>
           )}
@@ -198,8 +207,22 @@ export function ATSCheck() {
   };
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="grid gap-6 lg:grid-cols-2 items-start">
+      <div className="space-y-4 lg:sticky lg:top-24 animate-fade-up">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Result</h3>
+        {result ? (
+          <ATSResults result={result} />
+        ) : (
+          <ResultBlock label="ATS Results">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Run ATS Check to view score breakdown, matched keywords, missing keywords, and recommendations here.
+            </p>
+          </ResultBlock>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4 animate-slide-in-right rounded-2xl border border-border bg-card px-4 py-5 shadow-brand-sm">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">ATS Check</h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="ats-role">Target Role (optional)</Label>
@@ -278,8 +301,6 @@ export function ATSCheck() {
           )}
         </Button>
       </form>
-
-      {result && <ATSResults result={result} />}
     </div>
   );
 }

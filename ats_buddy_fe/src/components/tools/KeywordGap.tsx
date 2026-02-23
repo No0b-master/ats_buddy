@@ -161,8 +161,20 @@ export function KeywordGap() {
   };
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="grid gap-6 lg:grid-cols-2 items-start">
+      <div className="space-y-4 lg:sticky lg:top-24 animate-fade-up">
+        {result ? (
+          <KeywordGapResults result={result} />
+        ) : (
+          <ResultBlock label="Keyword Gap Results">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Run analysis to view coverage score, high-priority keywords, and missing keyword list here.
+            </p>
+          </ResultBlock>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4 animate-slide-in-right">
         <div>
           <Label htmlFor="kw-resume">Resume Text *</Label>
           <div className="mt-2 mb-2">
@@ -218,8 +230,6 @@ export function KeywordGap() {
           )}
         </Button>
       </form>
-
-      {result && <KeywordGapResults result={result} />}
     </div>
   );
 }

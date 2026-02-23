@@ -19,6 +19,7 @@ export interface RegisteredUser {
   user_id: number;
   full_name: string;
   email: string;
+  profile_image_url?: string | null;
 }
 
 export interface ResumeExtractResult {
@@ -37,6 +38,10 @@ export interface RegisterPayload {
 export interface LoginPayload {
   email: string;
   password: string;
+}
+
+export interface GoogleAuthPayload {
+  id_token: string;
 }
 
 export interface ATSCheckPayload {
@@ -200,6 +205,17 @@ export const api = {
         method: 'POST',
         body: JSON.stringify(payload),
       }),
+
+    google: (payload: GoogleAuthPayload) =>
+      request<ApiResponse<AuthTokens>>('/api/v1/auth/google', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+
+    me: () =>
+      request<ApiResponse<RegisteredUser>>('/api/v1/auth/me', {
+        method: 'GET',
+      }, true),
   },
 
   ats: {
